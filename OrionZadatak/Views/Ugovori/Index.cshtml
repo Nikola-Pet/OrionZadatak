@@ -1,0 +1,65 @@
+﻿@model IEnumerable<OrionZadatak.Entities.Ugovor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KorisnickoIme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrajanjeUgovorneObaveze)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Popust)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GratisPeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KorisnickoIme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrajanjeUgovorneObaveze)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Popust)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GratisPeriod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BrojUgovora">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BrojUgovora">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BrojUgovora">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -6,47 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrionZadatak.Entities;
-using OrionZadatak.Models;
 
 namespace OrionZadatak.Controllers
 {
-    public class PaketiController : Controller
+    public class UgovoriController : Controller
     {
         private readonly OrionZadatakContext _context;
 
-
-        public PaketiController(OrionZadatakContext context)
+        public UgovoriController(OrionZadatakContext context)
         {
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new PaketView();
-            model.KolekcijaPaketa = _context.Paketi.ToList();
-
-          
-            return View(model);
+            return View(await _context.Ugovori.ToListAsync());
         }
 
-
+       
         public IActionResult Create()
         {
-           
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaketId,Naziv,Opis,Cena,Kategorija")] Paket paket)
+        public async Task<IActionResult> Create([Bind("BrojUgovora,KorisnickoIme,TrajanjeUgovorneObaveze,Popust,GratisPeriod,Paket,Status")] Ugovor ugovor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paket);
+                ugovor.Status = true;
+                _context.Add(ugovor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paket);
+            return View(ugovor);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -56,19 +50,19 @@ namespace OrionZadatak.Controllers
                 return NotFound();
             }
 
-            var paket = await _context.Paketi.FindAsync(id);
-            if (paket == null)
+            var ugovor = await _context.Ugovori.FindAsync(id);
+            if (ugovor == null)
             {
                 return NotFound();
             }
-            return View(paket);
+            return View(ugovor);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaketId,Naziv,Opis,Cena,Kategorija")] Paket paket)
+        public async Task<IActionResult> Edit(int id, [Bind("BrojUgovora,KorisnickoIme,TrajanjeUgovorneObaveze,Popust,GratisPeriod,Paket,Status")] Ugovor ugovor)
         {
-            if (id != paket.PaketId)
+            if (id != ugovor.BrojUgovora)
             {
                 return NotFound();
             }
@@ -77,12 +71,12 @@ namespace OrionZadatak.Controllers
             {
                 try
                 {
-                    _context.Update(paket);
+                    _context.Update(ugovor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PaketExists(paket.PaketId))
+                    if (!UgovorExists(ugovor.BrojUgovora))
                     {
                         return NotFound();
                     }
@@ -93,7 +87,7 @@ namespace OrionZadatak.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paket);
+            return View(ugovor);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -103,29 +97,29 @@ namespace OrionZadatak.Controllers
                 return NotFound();
             }
 
-            var paket = await _context.Paketi
-                .FirstOrDefaultAsync(m => m.PaketId == id);
-            if (paket == null)
+            var ugovor = await _context.Ugovori
+                .FirstOrDefaultAsync(m => m.BrojUgovora == id);
+            if (ugovor == null)
             {
                 return NotFound();
             }
 
-            return View(paket);
+            return View(ugovor);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirm(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paket = await _context.Paketi.FindAsync(id);
-            _context.Paketi.Remove(paket);
+            var ugovor = await _context.Ugovori.FindAsync(id);
+            _context.Ugovori.Remove(ugovor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PaketExists(int id)
+        private bool UgovorExists(int id)
         {
-            return _context.Paketi.Any(e => e.PaketId == id);
+            return _context.Ugovori.Any(e => e.BrojUgovora == id);
         }
     }
 }

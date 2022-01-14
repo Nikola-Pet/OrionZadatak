@@ -14,5 +14,7 @@ namespace OrionZadatak.Entities
         public int Cena { get; set; }
         public string Kategorija { get; set; }
 
+
+
     }
 }

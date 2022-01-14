@@ -1,5 +1,7 @@
-﻿@model IEnumerable<OrionZadatak.Entities.Paket>
+﻿ @model OrionZadatak.Models.PaketView
 @{
+    var Kategorije = new SelectList(new[] {"NET", "IPTV", "VOICE" });
+
     ViewData["Title"] = "Index";
 }
 
@@ -9,21 +11,54 @@
     <a asp-action="Create">Napravi novi paket</a>
 </p>
 
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Paket.Naziv" class="control-label"></label>
+                <input asp-for="Paket.Naziv" class="form-control" />
+                <span asp-validation-for="Paket.Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paket.Opis" class="control-label"></label>
+                <input asp-for="Paket.Opis" class="form-control" />
+                <span asp-validation-for="Paket.Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paket.Cena" class="control-label"></label>
+                <input asp-for="Paket.Cena" class="form-control" />
+                <span asp-validation-for="Paket.Cena" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Paket.Kategorija" class="control-label"></label>
+                <select asp-for="Paket.Kategorija" asp-items="@Kategorije" class="form-control"></select>
+                <span asp-validation-for="Paket.Kategorija" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Snimi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <table class="table table-bordered ">
     <thead>
         <tr>
+            
             <th>
-                @Html.DisplayNameFor(model => model.Naziv)
+                @Html.DisplayNameFor(model => model.Paket.Naziv)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Opis)
+                @Html.DisplayNameFor(model => model.Paket.Opis)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cena)
+                @Html.DisplayNameFor(model => model.Paket.Cena)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Kategorija)
+                @Html.DisplayNameFor(model => model.Paket.Kategorija)
             </th>
             <th>
                 Akcija
@@ -31,28 +66,29 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.KolekcijaPaketa)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Naziv)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Opis)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cena)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Kategorija)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.PaketId">Izmena</a>
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.PaketId">Brisanje</a>
-                </td>
-            </tr>
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kategorija)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PaketId">Izmena</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.PaketId">Brisanje</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
