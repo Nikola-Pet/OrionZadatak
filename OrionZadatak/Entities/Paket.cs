@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #nullable disable
 
@@ -12,5 +13,6 @@ namespace OrionZadatak.Entities
         public string Opis { get; set; }
         public int Cena { get; set; }
         public string Kategorija { get; set; }
+
     }
 }

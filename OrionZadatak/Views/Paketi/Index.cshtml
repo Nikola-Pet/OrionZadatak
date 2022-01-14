@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OrionZadatak.Entities.Paket>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Paket</h1>
+
+<p>
+    <a asp-action="Create">Napravi novi paket</a>
+</p>
+
+
+<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Opis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategorija)
+            </th>
+            <th>
+                Akcija
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cena)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategorija)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PaketId">Izmena</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.PaketId">Brisanje</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

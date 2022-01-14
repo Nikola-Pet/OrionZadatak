@@ -22,10 +22,10 @@ namespace OrionZadatak.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=NIKOLA-PC\\NIKOLASQL; Initial Catalog= OrionZadatak; Trusted_Connection=True;");
-            }
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseSqlServer("Data Source=NIKOLA-PC\\NIKOLASQL; Initial Catalog= OrionZadatak; Trusted_Connection=True;");
+            //}
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace OrionZadatak.Entities
 
             modelBuilder.Entity<Paket>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.PaketId);
 
                 entity.ToTable("Paket");
 
@@ -43,10 +43,6 @@ namespace OrionZadatak.Entities
                 entity.Property(e => e.Naziv).IsRequired();
 
                 entity.Property(e => e.Opis).IsRequired();
-
-                entity.Property(e => e.PaketId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("PaketID");
             });
 
             modelBuilder.Entity<Ugovor>(entity =>
