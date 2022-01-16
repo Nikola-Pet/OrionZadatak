@@ -30,11 +30,7 @@ namespace OrionZadatak.Controllers
         }
 
 
-        public IActionResult Create()
-        {
-           
-            return View();
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

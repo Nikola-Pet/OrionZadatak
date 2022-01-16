@@ -15,6 +15,5 @@ namespace OrionZadatak.Entities
         public string Kategorija { get; set; }
 
 
-
     }
 }

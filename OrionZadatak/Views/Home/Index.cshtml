@@ -1,8 +1,115 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model OrionZadatak.Models.UgovorView
+@inject OrionZadatak.Data.IUgovorRepo UgovorRepo
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <p>
+        <a asp-controller="Ugovori" asp-action="Create">Kreiraj novi ugovor</a>
+    </p>
+
+
+<div>
+    <table class="table table-bordered ">
+        <thead>
+            <tr>
+                <th>Trenutno aktivnih ugovora</th>
+                <th>Trenutno neaktivnih ugovora</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @UgovorRepo.BrojUgovorabyAktivanStatus()
+                </td>
+                <td>
+                    @UgovorRepo.BrojUgovorabyNeaktivanStatus()
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+
+
+
+
+<div>
+    <table class="table table-bordered ">
+        <thead>
+            <tr>
+                <th collspan="2">Akcija</th>
+                <th></th>
+                <th>Broj ugovora</th>
+                <th>Username</th>
+                <th>Trajanje</th>
+                <th>Datum kreiranja</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.KolekcijaUgovora)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Ugovori" asp-action="Edit" asp-route-id="@item.BrojUgovora">Izmena</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Ugovori" asp-action="Delete" asp-route-id="@item.BrojUgovora">Brisanje</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrojUgovora)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KorisnickoIme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrajanjeUgovorneObaveze)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumKreiranja)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<div>
+    <table class="table table-bordered ">
+        <thead>
+
+            <tr>
+                <th>Broj Ugovora</th>
+                <th>Prihod (RSD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{float a = 0;}
+            @foreach (var item in Model.KolekcijaUgovora)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrojUgovora)
+                    </td>
+                    <td>
+                        @UgovorRepo.Prihod(item.TrajanjeUgovorneObaveze, item.GratisPeriod, item.Popust, UgovorRepo.CenaPaketa(item.BrojUgovora))
+                        @{a += UgovorRepo.Prihod(item.TrajanjeUgovorneObaveze, item.GratisPeriod, item.Popust, UgovorRepo.CenaPaketa(item.BrojUgovora));}
+                    </td>
+
+                </tr>
+            }
+            <tr>
+                <td>
+                   Suma
+                </td>
+                <td>
+                   @a
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+

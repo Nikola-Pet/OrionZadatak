@@ -1,10 +1,11 @@
-﻿@model OrionZadatak.Entities.Ugovor
+﻿@model OrionZadatak.Models.UgovorView
+@inject OrionZadatak.Data.IPaketRepo Ipaket
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Izmena</h1>
 
 <h4>Ugovor</h4>
 <hr />
@@ -12,47 +13,78 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="BrojUgovora" />
+            <input type="hidden" asp-for="Ugovor.BrojUgovora" />
             <div class="form-group">
-                <label asp-for="KorisnickoIme" class="control-label"></label>
-                <input asp-for="KorisnickoIme" class="form-control" />
-                <span asp-validation-for="KorisnickoIme" class="text-danger"></span>
+                <label class="control-label">Broj Ugovora</label>
+                <input readonly="readonly" asp-for="Ugovor.BrojUgovora" class="form-control" />
+                <span asp-validation-for="Ugovor.BrojUgovora" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TrajanjeUgovorneObaveze" class="control-label"></label>
-                <input asp-for="TrajanjeUgovorneObaveze" class="form-control" />
-                <span asp-validation-for="TrajanjeUgovorneObaveze" class="text-danger"></span>
+                <label class="control-label">Korisnicko Ime</label>
+                <input asp-for="Ugovor.KorisnickoIme" class="form-control" />
+                <span asp-validation-for="Ugovor.KorisnickoIme" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Popust" class="control-label"></label>
-                <input asp-for="Popust" class="form-control" />
-                <span asp-validation-for="Popust" class="text-danger"></span>
+                <label class="control-label">Trajanje ugovorne obaveze</label>
+                <input asp-for="Ugovor.TrajanjeUgovorneObaveze" class="form-control" />
+                <span asp-validation-for="Ugovor.TrajanjeUgovorneObaveze" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GratisPeriod" class="control-label"></label>
-                <input asp-for="GratisPeriod" class="form-control" />
-                <span asp-validation-for="GratisPeriod" class="text-danger"></span>
+                <label asp-for="Ugovor.Popust" class="control-label"></label>
+                <input asp-for="Ugovor.Popust" class="form-control" />
+                <span asp-validation-for="Ugovor.Popust" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Paket" class="control-label"></label>
-                <input asp-for="Paket" class="form-control" />
-                <span asp-validation-for="Paket" class="text-danger"></span>
+                <label class="control-label">Gratis Period</label>
+                <input asp-for="Ugovor.GratisPeriod" class="form-control" />
+                <span asp-validation-for="Ugovor.GratisPeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Naziv Paketa</label>
+                <select asp-for="NazivPaketa" asp-items="@Ipaket.NaziviPaketa()" class="form-control"></select>
+                <span asp-validation-for="NazivPaketa" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                    <input class="form-check-input" asp-for="Ugovor.Status" /> @Html.DisplayNameFor(model => model.Ugovor.Status)
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Snimi" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Status</th>
+            <th>Suma</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Istorija)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suma)
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

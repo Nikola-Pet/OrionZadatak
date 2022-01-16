@@ -1,57 +1,58 @@
 ﻿@model OrionZadatak.Entities.Ugovor
+@inject OrionZadatak.Data.IPaketRepo Ipaket
+
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Brisanje</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Da li ste sigurni da zelite da obrisete ovo?</h3>
 <div>
     <h4>Ugovor</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.KorisnickoIme)
+        <dt class="col-sm-2">
+            Korisnicko ime
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.KorisnickoIme)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TrajanjeUgovorneObaveze)
+        <dt class="col-sm-2">
+            Trajanje ugovorne obaveze
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TrajanjeUgovorneObaveze)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Popust)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Popust)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GratisPeriod)
+        <dt class="col-sm-2">
+            Gratis period
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.GratisPeriod)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Paket)
+        <dt class="col-sm-2">
+            Paket
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Paket)
+        <dd class="col-sm-10">
+            @Ipaket.NazivPaketa(Model.PaketId)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="BrojUgovora" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Brisanje" class="btn btn-danger" /> |
     </form>
 </div>

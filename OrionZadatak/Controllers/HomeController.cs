@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OrionZadatak.Entities;
 using OrionZadatak.Models;
 using System;
 using System.Collections.Generic;
@@ -12,21 +13,29 @@ namespace OrionZadatak.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly OrionZadatakContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, OrionZadatakContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new UgovorView();
+            model.KolekcijaUgovora = _context.Ugovori.OrderByDescending(x => x.DatumKreiranja).Take(5).ToList();
+
+
+            model.KolekcijaAktivnihUgovora = _context.Ugovori.Where(x => x.Status == true).ToList();
+
+            
+
+            return View(model);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

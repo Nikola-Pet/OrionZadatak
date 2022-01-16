@@ -9,10 +9,9 @@ namespace OrionZadatak.Models
 {
     public class PaketView
     {
-        public IEnumerable<OrionZadatak.Entities.Paket> KolekcijaPaketa { get; set; }
+        public IEnumerable<Paket> KolekcijaPaketa { get; set; }
         public Paket Paket { get; set; }
 
-        public List<SelectListItem> k = new List<SelectListItem>();
 
 
 

@@ -20,9 +20,12 @@ namespace OrionZadatak.Entities
         public virtual DbSet<Paket> Paketi { get; set; }
         public virtual DbSet<Ugovor> Ugovori { get; set; }
 
+        public virtual DbSet<Istorija> Istorije { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,10 +53,25 @@ namespace OrionZadatak.Entities
 
                 entity.Property(e => e.KorisnickoIme).IsRequired();
 
-                entity.Property(e => e.Paket).IsRequired();
+                entity.Property(e => e.PaketId).IsRequired();
 
                 entity.Property(e => e.TrajanjeUgovorneObaveze).IsRequired();
             });
+
+           modelBuilder.Entity<Istorija>(entity =>
+           {
+               entity.HasKey(e => e.Id);
+
+               entity.ToTable("Istorija");
+
+               entity.Property(e => e.BrojUgovora).IsRequired();
+
+               entity.Property(e => e.Datum).IsRequired();
+
+               entity.Property(e => e.Status).IsRequired();
+
+               entity.Property(e => e.Suma).IsRequired();
+           });
 
             OnModelCreatingPartial(modelBuilder);
         }

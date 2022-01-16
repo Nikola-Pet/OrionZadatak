@@ -1,10 +1,13 @@
-﻿@model OrionZadatak.Entities.Ugovor
+﻿@model OrionZadatak.Models.UgovorView
+@inject OrionZadatak.Data.IPaketRepo Ipaket
 
 @{
+    var trajanje = new SelectList(new[] { 12, 24 });
+
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Kreiraj</h1>
 
 <h4>Ugovor</h4>
 <hr />
@@ -13,45 +16,39 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="KorisnickoIme" class="control-label"></label>
-                <input asp-for="KorisnickoIme" class="form-control" />
-                <span asp-validation-for="KorisnickoIme" class="text-danger"></span>
+                <label class="control-label">Korisnicko ime</label>
+                <input asp-for="Ugovor.KorisnickoIme" class="form-control" />
+                <span asp-validation-for="Ugovor.KorisnickoIme" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TrajanjeUgovorneObaveze" class="control-label"></label>
-                <input asp-for="TrajanjeUgovorneObaveze" class="form-control" />
-                <span asp-validation-for="TrajanjeUgovorneObaveze" class="text-danger"></span>
+                <label class="control-label">Trajanje ugovorne obaveze </label>
+                <select asp-for="Ugovor.TrajanjeUgovorneObaveze" asp-items="@trajanje" class="form-control"></select>
+                <span asp-validation-for="Ugovor.TrajanjeUgovorneObaveze" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Popust" class="control-label"></label>
-                <input asp-for="Popust" class="form-control" />
-                <span asp-validation-for="Popust" class="text-danger"></span>
+                <label asp-for="Ugovor.Popust" class="control-label"></label>
+                <input min="0" max="100" asp-for="Ugovor.Popust" class="form-control" />
+                <span asp-validation-for="Ugovor.Popust" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GratisPeriod" class="control-label"></label>
-                <input asp-for="GratisPeriod" class="form-control" />
-                <span asp-validation-for="GratisPeriod" class="text-danger"></span>
+                <label class="control-label">Gratis period</label>
+                <input min="0" max="6" asp-for="Ugovor.GratisPeriod" class="form-control" />
+                <span asp-validation-for="Ugovor.GratisPeriod" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Paket" class="control-label"></label>
-                <input asp-for="Paket" class="form-control" />
-                <span asp-validation-for="Paket" class="text-danger"></span>
+                <label class="control-label">NazivPaketa</label>
+                <select asp-for="NazivPaketa" asp-items="@Ipaket.NaziviPaketa()" class="form-control"></select>
+                <span asp-validation-for="NazivPaketa" class="text-danger"></span>
             </div>
-            @*<div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
-                </label>
-            </div>*@
+            
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Snimi" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
