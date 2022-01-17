@@ -10,7 +10,8 @@ namespace OrionZadatak.Models
     {
         public Ugovor Ugovor { get; set; }
 
-        public IEnumerable<Ugovor> KolekcijaUgovora { get; set; }
+        public IEnumerable<Ugovor> KolekcijaUgovora5 { get; set; }
+
         public IEnumerable<Ugovor> KolekcijaAktivnihUgovora { get; set; }
 
         public string NazivPaketa { get; set; }

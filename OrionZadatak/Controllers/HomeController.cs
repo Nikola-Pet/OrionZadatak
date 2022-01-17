@@ -25,8 +25,7 @@ namespace OrionZadatak.Controllers
         public IActionResult Index()
         {
             var model = new UgovorView();
-            model.KolekcijaUgovora = _context.Ugovori.OrderByDescending(x => x.DatumKreiranja).Take(5).ToList();
-
+            model.KolekcijaUgovora5 = _context.Ugovori.OrderByDescending(x => x.DatumKreiranja).Take(5).ToList();
 
             model.KolekcijaAktivnihUgovora = _context.Ugovori.Where(x => x.Status == true).ToList();
 
