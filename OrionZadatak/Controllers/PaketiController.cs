@@ -25,12 +25,10 @@ namespace OrionZadatak.Controllers
             var model = new PaketView();
             model.KolekcijaPaketa = _context.Paketi.ToList();
 
-          
+
             return View(model);
         }
 
-
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -42,7 +40,7 @@ namespace OrionZadatak.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(paket);
+                return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)

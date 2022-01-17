@@ -27,10 +27,7 @@ namespace OrionZadatak.Controllers
             _ugovorRepo = ugovorRepo;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Ugovori.ToListAsync());
-        }
+       
 
 
         public IActionResult Create()
@@ -54,7 +51,7 @@ namespace OrionZadatak.Controllers
                 
                 _context.Add(ugovor);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             return View(ugovor);
         }
@@ -134,7 +131,7 @@ namespace OrionZadatak.Controllers
               
 
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             return View(ugovor);
         }
@@ -165,7 +162,7 @@ namespace OrionZadatak.Controllers
             var istorija = _context.Istorije.Where(x => x.BrojUgovora == id).ToArray();
             _context.Istorije.RemoveRange(istorija);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Create));
         }
 
         private bool UgovorExists(int id)
